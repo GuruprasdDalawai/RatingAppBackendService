@@ -3,9 +3,9 @@
  * @description Route for fetching a single employee's details by ID.
  */
 
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const db = require("../../../db/dbConnection");
+const db = require('../../../db/dbConnection');
 
 /**
  * @route GET /employees/:id
@@ -24,22 +24,13 @@ const db = require("../../../db/dbConnection");
  * }
  */
 
-router.get("/employees/:id", (req, res) => {
-  try {
-    const { id } = req.params;
-    db.query(
-      "SELECT * FROM employee_table WHERE Employee_Id = ?",
-      [id],
-      (err, results) => {
-        if (err) return res.status(500).json({ error: err.message });
-        if (results.length === 0)
-          return res.status(404).json({ message: "Employee not found" });
-        res.json(results[0]);
-      }
-    );
-  } catch (err) {
-    console.error("Error fetching employee:", err);
-    return res.status(500).json({ error: "Internal server error." });
-  }
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+  db.query('SELECT Employee_Id, Employee_Name, Employee_Designation, IMG_file, Employee_Department,Employee_Email FROM employee_table WHERE Employee_Id = ?', [id], (err, results) => {
+    if (err) return res.status(500).json({ error: err.message });
+    if (results.length === 0) return res.status(404).json({ message: 'Employee not found' });
+    res.json(results[0]);
+  });
 });
 module.exports = router;
+                        

@@ -72,7 +72,7 @@ router.post('/saveHierarchy', async (req, res) => {
     res.json({ message: "Hierarchy updated successfully." });
   } catch (err) {
     console.error("Error saving hierarchy:", err);
-    res.status(500).json({ error: "Failed to update hierarchy." });
+    return res.status(500).json({ error: "Failed to update hierarchy." });
   }
 });
 

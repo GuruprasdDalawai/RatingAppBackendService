@@ -4,6 +4,7 @@ const router = express.Router();
 const connection=require('../../../db/dbConnection')
 const verifyToken = require('../../../services/middlewares/auth');
 const e = require('express');
+const { v4: uuidv4 } = require('uuid');
 
 
 
@@ -37,18 +38,19 @@ router.post('/requestMock', async (req, res) => {
             // Proceed to insert if user does not exist
             // 2️⃣ Prepare SQL insert
             const sql = `
-                INSERT INTO admin_notification
+             INSERT INTO admin_notification
                 (User_Id, Requested_Date, Status, Reviewer_name, Mock_Type,Request_Id,SelectedId)
                 VALUES (?, ?, ?, ?, ?, ?,?)
-            `;
-            let reqId = Math.floor(Math.random() * 1000000);
-            const requestId = 'REQID' + reqId; 
+            `;   
+            // let reqId .= Math.floor(Math.random() * 1000000);
+            // const requestId = 'REQID' + reqId; 
 
-            const prefix = 'M001';
-            const randomNumber = Math.floor(Math.random() * 10000);
-            const meetingId = `${prefix}${randomNumber.toString().padStart(4, '0')}`;
+            // const prefix = 'M001';
+            // const randomNumber = Math.floor(Math.random() * 10000);
+            // const meetingId = `${prefix}${randomNumber.toString().padStart(4, '0')}`;
+            const requestId = uuidv4(); // Generate a unique Request_Id using UUID
 
-            connection.query(sql, [User_Id, Requested_Date, Status,meetingId, Mock_Type, requestId, SelectedId], (error, results) => {
+            connection.query(sql, [User_Id, Requested_Date, Status,Reviewer_name, Mock_Type, requestId, SelectedId], (error, results) => {
                 if (error) {
                     console.error("Error inserting data into database:", error);
                     return res.status(500).json({ error: "Database error while inserting record." });

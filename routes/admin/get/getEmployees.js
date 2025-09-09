@@ -1,10 +1,12 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const db = require('../../../db/dbConnection');
-const verifyToken = require('../../../services/middlewares/auth')
+const db = require("../../../db/dbConnection");
+const verifyToken = require("../../../services/middlewares/auth");
 
-router.get('/employees',(req, res) => {
-  db.query(`SELECT 
+router.get("/employees", (req, res) => {
+  try {
+    db.query(
+      `SELECT 
   Employee_Id,
   Employee_Name,
   Employee_Designation,
@@ -21,10 +23,16 @@ router.get('/employees',(req, res) => {
   mentor,
   position,
   mentorId
-FROM employee_table`, (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json(results);
-  });
+FROM employee_table`,
+      (err, results) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(results);
+      }
+    );
+  } catch (err) {
+    console.error("Error fetching employees:", err);
+    return res.status(500).json({ error: "Internal server error." });
+  }
 });
 
 module.exports = router;

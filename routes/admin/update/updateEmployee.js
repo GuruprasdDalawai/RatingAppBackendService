@@ -3,11 +3,10 @@
  * @description Route for updating an employee by ID using HTTP PUT method.
  */
 
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const verifyToken = require('../../../services/middlewares/auth');
-const { updateEmployeeById } = require('../../../services/employeeService');
-
+const verifyToken = require("../../../services/middlewares/auth");
+const { updateEmployeeById } = require("../../../services/employeeService");
 
 /**
  * @route PUT /updateEmployee/:id
@@ -26,17 +25,17 @@ const { updateEmployeeById } = require('../../../services/employeeService');
  * }
  */
 
-router.put('/updateEmployee/:id', async (req, res) => {
-    try {
-        const employeeId = req.params.id;
-        await updateEmployeeById(employeeId, req.body); // true for full validation
-        return res.status(200).json({ message: `Employee fully updated (PUT).` });
-    } catch (err) {
-        if (err.message === 'NOT_FOUND') {
-            return res.status(404).json({ error: 'Employee not found.' });
-        }
-        return res.status(400).json({ error: err.message || 'Update failed.' });
+router.put("/updateEmployee/:id", async (req, res) => {
+  try {
+    const employeeId = req.params.id;
+    await updateEmployeeById(employeeId, req.body); // true for full validation
+    return res.status(200).json({ message: `Employee fully updated (PUT).` });
+  } catch (err) {
+    if (err.message === "NOT_FOUND") {
+      return res.status(404).json({ error: "Employee not found." });
     }
+    return res.status(400).json({ error: err.message || "Update failed." });
+  }
 });
 
 module.exports = router;

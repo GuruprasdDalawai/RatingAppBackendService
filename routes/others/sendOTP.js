@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const connection = require('../../db/dbConnection');
 const verifyToken = require('../../services/middlewares/auth');
+const sendEmailOTP = require('../../services/email/sendEmailOTP');
+
 
 // POST /api/send-otp
 
@@ -24,6 +26,7 @@ router.post('/send-otp', (req, res) => {
         console.error(err2);
         return res.status(500).json({ message: "Failed to save OTP." });
       }
+      sendEmailOTP({EMPLOYEENAME:rows[0].Employee_Name,Email:rows[0].Employee_Email,Otp:otp});
 
       console.log(`Generated OTP ${otp} for employee ${employeeId}`);
       res.json({ message: "OTP sent to your registered email." });
