@@ -16,13 +16,18 @@ const getEmployees = require('./get/getEmployees');
 const getEmployeeById = require('./get/getEmployeeById');
 const getEmployeesByDept=require('./get/getEmpoyeesBydepartment')
 const getNotification = require('./get/getNotification');
+const getPreviousEmployees=require('./get/getPreviousEmployees')
 
 //------UPDATE ROUTES FOR EMPLOYEE FUNCTIONALITY-------//
 const updateEmployee = require('./update/updateEmployee');
+const updateProfileImage=require('./update/updateProfileImage')
 
 //-------DELETE ROUTES FOR ADMIN FUNCTIONALITY-------//
 const deleteEmployee = require('./delete/deleteEmployee');
 const detletNoticfication=require('./delete/deleteNotifications')
+const deletePrevsEmp=require('./delete/deletePrevsEmp')
+const resetBackEmp=require('./delete/resetBackEmp')
+
 
 
 
@@ -38,5 +43,9 @@ router.use(getEmployeesByDept)
 router.use(requestMock);
 router.use(getNotification);
 router.use(detletNoticfication);
+router.use(getPreviousEmployees);
+router.use(updateProfileImage);
+router.use(deletePrevsEmp);
+router.use(resetBackEmp);   
 
 module.exports = router;

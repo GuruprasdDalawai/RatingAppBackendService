@@ -12,5 +12,4 @@ router.use(verifyOTP);
 router.use(resetPassword);
 router.use(getRatings);
 router.use(getKPIPoints);
-
 module.exports = router;

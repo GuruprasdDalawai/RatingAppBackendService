@@ -55,9 +55,9 @@ router.post('/saveHierarchy', async (req, res) => {
       return new Promise((resolve, reject) => {
         connection.query(
           `UPDATE employee_table
-           SET mentorId = ?, Employee_Department = ?
+           SET mentorId = ?, Employee_Department = ?, position =?, mentor = ?
            WHERE Employee_Id = ?`,
-          [emp.mentorId, emp.Employee_Department, emp.Employee_Id],
+          [emp.mentorId, emp.Employee_Department, emp.position_level, emp.mentor_name, emp.Employee_Id],
           (err, result) => {
             if (err) return reject(err);
             resolve(result);
