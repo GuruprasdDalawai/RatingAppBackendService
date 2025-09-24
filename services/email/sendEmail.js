@@ -21,25 +21,25 @@ const graphClient = Client.initWithMiddleware({
 });
 
 // Send mail
-async function sendMail(recipient,subject,htmlbody) {
+async function sendMail(recipients, subject, htmlbody) {
   try {
-    // await graphClient.api('/users/guruprasad@signiwis.com/sendMail')
-    //   .post({
-    //     message: {
-    //       subject: subject,
-    //       body: {
-    //         contentType: "html",
-    //         content: htmlbody,
-    //       },     
-    //       toRecipients: [
-    //         {
-    //           emailAddress: {
-    //             address: recipient
-    //           }
-    //         }
-    //       ]
-    //     }
-    //   });
+    // Ensure recipients is always an array
+    const recipientArray = Array.isArray(recipients) ? recipients : [recipients];
+
+    await graphClient.api('/users/guruprasad@signiwis.com/sendMail')
+      .post({
+        message: {
+          subject: subject,
+          body: {
+            contentType: "html",
+            content: htmlbody,
+          },
+          toRecipients: recipientArray.map(email => ({
+            emailAddress: { address: email }
+          }))
+        }
+      });
+
     console.log("Email sent successfully!");
     return true;
   } catch (error) {
@@ -48,6 +48,10 @@ async function sendMail(recipient,subject,htmlbody) {
   }
 }
 
-module.exports=sendMail
+module.exports = sendMail;
 
- 
+
+// sendMail("Ramakrishna.m@signiwis.com", "Test Subject", "<p>Hello World</p>");
+
+// // Multiple recipients
+// sendMail(["Ramakrishna.m@signiwis.com", "girish.ne@signiwis.com"], "Group Subject", "<p>Hello Everyone</p>")
