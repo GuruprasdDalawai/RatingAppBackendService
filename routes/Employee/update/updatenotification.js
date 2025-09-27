@@ -6,7 +6,7 @@ const connection = require('../../../db/dbConnection');
 router.put('/update-notification', (req, res) => {
     const { requestId, status , mode , dateTime } = req.body;
 
-    if (!requestId || !status || !mode || !dateTime) {
+    if (!requestId || !status  ) {
         return res.status(400).json({ error: 'Request ID, status, mode, and date are required.' });
     }
 

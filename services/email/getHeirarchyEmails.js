@@ -28,6 +28,7 @@ function getHeirarchyEmails(employeeId) {
 
     connection.query(sql, [employeeId], (err, results) => {
       if (err) {
+        console.log("getting error inHirarchy"+ " "+err+" "+employeeId )
         return reject(err);
       }
       resolve(results.map((row) => row.Employee_Email));
@@ -36,4 +37,4 @@ function getHeirarchyEmails(employeeId) {
 }
 
 // 👇 Export function
-module.exports = { getHeirarchyEmails };
+module.exports = getHeirarchyEmails ;

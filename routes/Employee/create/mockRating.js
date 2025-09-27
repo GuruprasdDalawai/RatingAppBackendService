@@ -2,6 +2,7 @@ const express=require('express')
 const router = express.Router();
 const connection=require('../../../db/dbConnection')
 const { v4: uuidv4 } = require('uuid');
+const sendEmailMockRating =require("../../../services/email/sendEmailMockRating")
 
 
 // POST API for inserting monthly review
@@ -77,6 +78,8 @@ router.post('/monthly-review', (req, res) => {
         console.error('Error updating request status:', updateErr.message);
         return res.status(500).json({ error: 'Request status update failed' });
       }
+
+      sendEmailMockRating(req.body)
 
 
       

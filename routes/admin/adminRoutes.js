@@ -10,6 +10,7 @@ const addnewEmployee=require('./create/addnewEmployee');
 const saveHierarchy= require('./create/saveHierarchy')
 const requestMock=require('./create/requestMock');
 const KPIrequest=require('./create/KPIrequest') 
+const addNewEmployeesByCSV=require('./create/addNewEmployeesByCSV')
 
 //------GET ROUTES FOR ADMIN FUNCTIONALITY-------//
 const getEmployees = require('./get/getEmployees');
@@ -47,5 +48,6 @@ router.use(getPreviousEmployees);
 router.use(updateProfileImage);
 router.use(deletePrevsEmp);
 router.use(resetBackEmp);   
+router.use(addNewEmployeesByCSV);
 
 module.exports = router;
